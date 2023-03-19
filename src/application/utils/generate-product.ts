@@ -4,7 +4,7 @@ import { generateProductDescription } from 'application/utils/generate-product-d
 import { generateProductTitleLength } from 'application/utils/generate-product-title-length';
 
 export const generateProduct = (title: string) => {
-  const id = title + Math.random() * 100000;
+  const id = crypto.randomUUID();
 
   const image = generateProductImageUrl({ seed: title, resolution: 320 });
 
