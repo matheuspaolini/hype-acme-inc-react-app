@@ -6,9 +6,8 @@ import { Box } from 'presentation/components/Box';
 import { Button } from 'presentation/components/Button';
 import { ChooseQuantity } from 'presentation/components/ChooseQuantity';
 import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
-import { IconButton } from 'presentation/components/IconButton';
 import { Spacer } from 'presentation/components/Spacer';
-import { keyframes, styled } from 'presentation/styles/stitches.config';
+import { animations, styled } from 'presentation/styles/stitches.config';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
 import { Navigator } from 'presentation/components/Navigator';
 
@@ -18,22 +17,13 @@ import { _productListAtom } from 'application/jotai-store/product-list';
 import { _cartAtom, _insertCartProductAtom } from 'application/jotai-store/cart';
 import { TrashIconButton } from 'presentation/components/TrashIconButton';
 
-const fadeInAnimation = keyframes({
-  from: {
-    opacity: 0,
-    transform: 'translateX(-25px)',
-  },
-  to: {
-    opacity: 1,
-    transform: 'translateX(0)',
-  }
-});
-
 const Container = styled('div', {
   width: '100%',
   maxWidth: 1080,
 
   margin: '0 auto',
+
+  animation: `${animations.fadeIn} 1s ease forwards`,
 
   '@medium-screen': {
     maxWidth: 640,
@@ -114,7 +104,7 @@ const Description = styled('p', {
 });
 
 const ButtonGroup = styled('div', {
-  animation: `${fadeInAnimation} 0.5s ease forwards`,
+  animation: `${animations.slideAndfadeIn} 0.5s ease forwards`,
 
   display: 'flex',
   alignItems: 'center',
@@ -196,7 +186,7 @@ export function ProductInformation() {
               onClick={handleAddToCart}
               leftAdornment={<ShoppingCart weight="fill" size={24} />}
               rootCss={{
-                animation: `${fadeInAnimation} 0.5s ease forwards`,
+                animation: `${animations.slideAndfadeIn} 0.5s ease forwards`,
                 '@small-screen': {
                   width: '100%',
                 }

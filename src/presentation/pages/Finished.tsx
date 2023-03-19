@@ -1,7 +1,7 @@
 import { CaretLeft, CheckCircle } from 'phosphor-react';
 import { Spacer } from 'presentation/components/Spacer';
 import { Main } from 'presentation/layouts/Main';
-import { styled } from 'presentation/styles/stitches.config';
+import { animations, styled } from 'presentation/styles/stitches.config';
 import { Link } from 'react-router-dom';
 
 const Contaier = styled('div', {
@@ -37,7 +37,7 @@ const BackHome = styled('span', {
 export function FinishedPage() {
   return (
     <Main>
-      <Contaier>
+      <Contaier css={{ animation: `${animations.fadeInPopUp} 0.75s ease forwards`, opacity: 0 }}>
         <CheckCircle size={240} color="currentColor" weight="fill" />
 
         <Message>

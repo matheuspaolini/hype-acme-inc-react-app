@@ -1,25 +1,28 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { Product } from 'domain/models/product';
 
 import { Spacer } from 'presentation/components/Spacer';
-import { styled } from 'presentation/styles/stitches.config';
+import { animations, styled } from 'presentation/styles/stitches.config';
 import { CartIconButton } from 'presentation/components/CartIconButton';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
 import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
+import { atom, useAtom, useAtomValue } from 'jotai';
 import { _cartAtom } from 'application/jotai-store/cart';
 import { TrashIconButton } from './TrashIconButton';
 
 type Props = {
   product?: Product;
+  index?: number;
 }
 
 const Container = styled('div', {
   width: '100%',
   maxWidth: 480,
+
+  opacity: 0,
 });
 
 const Image = styled('img', {
@@ -93,8 +96,10 @@ export function ProductCard({ product }: Props) {
     navigate({ pathname: productUrl });
   }, [productUrl]);
 
+  const animation = `${animations.fadeInPopUp} 0.5s forwards`
+
   return (
-    <Container>
+    <Container css={{ animation, opacity: 0 }}>
       <Wrapper>
         <Image
           onClick={handleImageClick}

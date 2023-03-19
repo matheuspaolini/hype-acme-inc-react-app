@@ -28,7 +28,7 @@ export const { styled, globalCss, keyframes, config, theme } = createStitches({
 
     shadows: {
       FocusRing: '0 0 0 3px #FF8787',
-    }
+    },
   },
 
   media: {
@@ -90,3 +90,60 @@ export const useStitches = globalCss({
     listStyle: 'none',
   }
 });
+
+export const animations = {
+  slideAndfadeIn: keyframes({
+    from: {
+      opacity: 0,
+      transform: 'translateX(-25px)',
+    },
+    to: {
+      opacity: 1,
+      transform: 'translateX(0)',
+    }
+  }),
+
+  fadeIn: keyframes({
+    from: {
+      opacity: 0,
+      pointerEvents: 'none',
+    },
+    to: {
+      opacity: 1,
+      pointerEvents: 'all',
+    }
+  }),
+
+  slideUp: keyframes({
+    from: {
+      bottom: '-100%',
+    },
+    to: {
+      bottom: 0,
+    }
+  }),
+
+  slideDown: keyframes({
+    from: {
+      bottom: 0,
+    },
+    to: {
+      bottom: '-100%',
+    }
+  }),
+
+  fadeInPopUp: keyframes({
+    '0%': {
+      opacity: 0,
+      transform: 'scale(0.5)',
+    },
+    '75%': {
+      opacity: 1,
+      transform: 'scale(1.025)',
+    },
+    '100%': {
+      opacity: 1,
+      transform: 'scale(1)',
+    }
+  }),
+}

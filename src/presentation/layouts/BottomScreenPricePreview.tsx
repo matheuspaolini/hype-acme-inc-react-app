@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { _cartTotalPriceAtom, _cartAtom, _cartTotalItemsAtom } from 'application/jotai-store/cart';
 
-import { keyframes, styled } from 'presentation/styles/stitches.config';
+import { animations, keyframes, styled } from 'presentation/styles/stitches.config';
 import { Box } from 'presentation/components/Box';
 import { Button } from 'presentation/components/Button';
 import { Spacer } from 'presentation/components/Spacer';
@@ -12,24 +12,6 @@ import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
 import { atom, useAtomValue, useSetAtom } from 'jotai';
 
 import { ArrowRight } from 'phosphor-react';
-
-const slideUpAnimation = keyframes({
-  from: {
-    bottom: '-100%',
-  },
-  to: {
-    bottom: 0,
-  }
-});
-
-const slideDownAnimation = keyframes({
-  from: {
-    bottom: 0,
-  },
-  to: {
-    bottom: '-100%',
-  }
-});
 
 const Container = styled('div', {
   position: 'fixed',
@@ -87,8 +69,8 @@ export function BottomScreenPricePreview() {
   const setShowBottomScreenPricePreviewAtom = useSetAtom(_showBottomScreenPricePreviewAtom);
 
   const currentAnimation = showBottomScreenPricePreviewAtom
-    ? slideUpAnimation
-    : slideDownAnimation;
+    ? animations.slideUp
+    : animations.slideDown;
 
   useEffect(() => {
     if (location.pathname.includes('checkout')) {

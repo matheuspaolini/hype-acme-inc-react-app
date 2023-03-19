@@ -9,7 +9,7 @@ import { Checkout } from 'domain/models/checkout';
 import { Navigator } from 'presentation/components/Navigator';
 import { OrderItem } from 'presentation/components/OrderItem';
 import { Spacer } from 'presentation/components/Spacer';
-import { styled } from 'presentation/styles/stitches.config';
+import { animations, styled } from 'presentation/styles/stitches.config';
 import { Button } from 'presentation/components/Button';
 import { Box } from 'presentation/components/Box';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
@@ -79,7 +79,7 @@ export function OrderCheckout() {
   }, [isCartEmpty]);
 
   return (
-    <Container>
+    <Container css={{ animation: `${animations.slideAndfadeIn} 0.5s ease forwards`, opacity: 0 }}>
       <Navigator pageTitle="Checkout" />
 
       <Spacer yAxis={64} />
