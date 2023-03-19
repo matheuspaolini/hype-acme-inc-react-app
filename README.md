@@ -12,6 +12,8 @@
 Frontend application simulating an e-commerce app.
 All the data is generated and stored on client-side.
 
+I'm not using a Design System to demonstrate my capabilities to create reusable components with TypeScript.
+
 Images provided by [Lorem Picsum](https://picsum.photos/);
 
 ## 📥 Running the project
