@@ -49,6 +49,8 @@ const StyledInput = styled('input', {
 
   color: 'currentColor',
 
+  outline: 'transparent',
+
   fontWeight: '$ExtraLight',
   fontSize: 20,
 

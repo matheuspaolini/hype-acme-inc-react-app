@@ -1,11 +1,12 @@
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
+
+import { _productListAtom } from 'application/jotai-store/product-list';
 
 import { Footer } from 'presentation/layouts/Footer';
 import { Header } from 'presentation/layouts/Header';
 import { styled, useStitches } from 'presentation/styles/stitches.config';
 import { BottomScreenPricePreview } from 'presentation/layouts/BottomScreenPricePreview';
-
-import { makeLocalCreateProductList } from 'main/factories/use-cases/local-create-product-list-factory';
+import { useSetupProductList } from 'presentation/hooks/use-setup-product-list';
 
 import { Outlet, ScrollRestoration } from 'react-router-dom';
 
@@ -14,10 +15,9 @@ const Container = styled('div', {
   height: '100%',
 });
 
-export const localProductList = makeLocalCreateProductList().perform();
-
 export function RootLayout() {
   useStitches();
+  useSetupProductList();
 
   return (
     <Fragment>
@@ -30,8 +30,8 @@ export function RootLayout() {
       <BottomScreenPricePreview />
 
       <ScrollRestoration
-        getKey={(location, matches) => {
-          const paths = ['/'];
+        getKey={(location) => {
+          const paths = ['/', '/finished'];
 
           return paths.includes(location.pathname)
             ? location.pathname

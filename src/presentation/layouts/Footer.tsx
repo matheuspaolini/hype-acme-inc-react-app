@@ -1,4 +1,4 @@
-import { ArrowSquareOut, GithubLogo } from 'phosphor-react';
+import { _showBottomScreenPricePreviewAtom } from 'presentation/layouts/BottomScreenPricePreview';
 import { AcmeIncLogo } from 'presentation/components/AcmeIncLogo';
 import { Box } from 'presentation/components/Box';
 import { Button } from 'presentation/components/Button';
@@ -6,15 +6,21 @@ import { Spacer } from 'presentation/components/Spacer';
 import { styled } from 'presentation/styles/stitches.config';
 import { openInNewTab } from 'presentation/utils/open-in-new-tab';
 
+import { useAtomValue } from 'jotai';
+
+import { ArrowSquareOut } from 'phosphor-react';
+
 const Container = styled('footer', {
   width: '100%',
-  height: 240,
+  height: 300,
 
   borderTopWidth: 2,
   borderTopColor: '$LowGray',
   borderTopStyle: 'solid',
 
-  background: '$White'
+  background: '$White',
+
+  padding: '48px 0',
 });
 
 const Center = styled('div', {
@@ -58,10 +64,17 @@ const RepositoryAnchor = styled('a', {
 });
 
 export function Footer() {
+  const showBottomScreenPricePreviewAtom = useAtomValue(_showBottomScreenPricePreviewAtom);
+
   const goToLiveDemo = () => openInNewTab('about:blank');
 
   return (
-    <Container>
+    <Container
+      css={{
+        paddingBottom: showBottomScreenPricePreviewAtom ? 160 : 48,
+        height: showBottomScreenPricePreviewAtom ? 'unset' : 'fit-content',
+      }}
+    >
       <Center>
         <AcmeIncLogo />
         <Spacer yAxis={16} />

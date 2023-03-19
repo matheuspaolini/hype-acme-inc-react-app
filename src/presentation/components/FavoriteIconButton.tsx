@@ -1,35 +1,41 @@
 import { Heart } from 'phosphor-react';
 import { IconButton } from './IconButton';
-import { RootCSS, styled } from 'presentation/styles/stitches.config';
-import { ForwardedRef, forwardRef, useCallback, useState } from 'react';
+import { RootCSS } from 'presentation/styles/stitches.config';
+import { ForwardedRef, forwardRef, useCallback } from 'react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { _insertFavoriteAtom, _favoritesAtom, _removeFavoriteAtom } from 'application/jotai-store/favorites';
+import { isFavorite } from 'domain/use-cases/is-favorite';
 
 type Props = {
-  size?: number;
   initialValue?: boolean;
+  productId?: string;
 
   onAddFavorite?: (value: boolean) => void;
 } & RootCSS;
 
 export function FavoriteIconButtonComponent(props: Props, ref: ForwardedRef<HTMLButtonElement>) {
-  const { size = 24, initialValue = false, onAddFavorite, rootCss } = props;
+  const { productId = '', rootCss } = props;
 
-  const [_isActive, _setIsActive] = useState(initialValue);
+  const favoritesAtom = useAtomValue(_favoritesAtom);
+  const isOnFavoritesAtom = isFavorite(favoritesAtom, productId);
+  const insetFavoriteAtom = useSetAtom(_insertFavoriteAtom);
+  const removeFavoriteAtom = useSetAtom(_removeFavoriteAtom);
 
-  const handleAddFavorite = useCallback(() => {
-    const nextState = !_isActive;
+  const handleToggleFavorite = useCallback(() => {
+    if (!productId) return;
 
-    _setIsActive(nextState);
-
-    if (onAddFavorite) onAddFavorite(nextState);
-  }, [_isActive, onAddFavorite]);
+    isOnFavoritesAtom
+      ? removeFavoriteAtom(productId)
+      : insetFavoriteAtom(productId);
+  }, [productId, isOnFavoritesAtom, removeFavoriteAtom, insetFavoriteAtom]);
 
   return (
     <IconButton
       ref={ref}
-      onClick={handleAddFavorite}
-      rootCss={{ ...rootCss, color: _isActive ? '$Primary' : '$MediumGray' }}
+      onClick={handleToggleFavorite}
+      rootCss={{ ...rootCss, color: isOnFavoritesAtom ? '$Primary' : '$MediumGray' }}
     >
-      <Heart size={size} weight="fill" />
+      <Heart size={24} weight="fill" />
     </IconButton>
   );
 }

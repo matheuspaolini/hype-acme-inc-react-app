@@ -1,12 +1,12 @@
-import { RootCSS, StitchesCSS, styled } from 'presentation/styles/stitches.config';
-import { ForwardedRef, ReactNode, forwardRef, useCallback, useState } from 'react';
+import { RootCSS, styled } from 'presentation/styles/stitches.config';
+import { ButtonHTMLAttributes, ForwardedRef, ReactNode, forwardRef, useCallback, useState } from 'react';
 
 type Props = {
   initialValue?: boolean;
   onToggle?: (value: boolean) => void;
 
   children?: ReactNode;
-} & RootCSS;
+} & ButtonHTMLAttributes<HTMLButtonElement> & RootCSS;
 
 const Container = styled('button', {
   position: 'relative',
@@ -64,7 +64,7 @@ const Container = styled('button', {
 });
 
 export function ToggleButtonComponent(props: Props, ref: ForwardedRef<HTMLButtonElement>) {
-  const { children, initialValue = false, onToggle, rootCss } = props;
+  const { children, initialValue = false, onToggle, rootCss, ...attributes } = props;
 
   const [_isActive, _setIsActive] = useState(initialValue);
 
@@ -89,6 +89,7 @@ export function ToggleButtonComponent(props: Props, ref: ForwardedRef<HTMLButton
         },
         ...rootCss
       }}
+      {...attributes}
     >
       {children}
     </Container>

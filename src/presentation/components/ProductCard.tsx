@@ -1,17 +1,20 @@
 import { useCallback } from 'react';
 
-import { ProductModel } from 'domain/models/product';
+import { Product } from 'domain/models/product';
 
 import { Spacer } from 'presentation/components/Spacer';
-import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
+import { styled } from 'presentation/styles/stitches.config';
 import { CartIconButton } from 'presentation/components/CartIconButton';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
-import { styled } from 'presentation/styles/stitches.config';
+import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
 
 import { Link, useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { _cartAtom } from 'application/jotai-store/cart';
+import { TrashIconButton } from './TrashIconButton';
 
 type Props = {
-  product?: Partial<ProductModel>;
+  product?: Product;
 }
 
 const Container = styled('div', {
@@ -80,6 +83,9 @@ const Price = styled('p', {
 export function ProductCard({ product }: Props) {
   const navigate = useNavigate();
 
+  const cartAtom = useAtomValue(_cartAtom);
+  const isOnCart = cartAtom.find((cartProduct) => cartProduct.id === product?.id);
+
   const productUrl = `/product/${product?.id}`;
   const formattedPrice = formatPriceToBrl(product?.price || 0);
 
@@ -87,22 +93,22 @@ export function ProductCard({ product }: Props) {
     navigate({ pathname: productUrl });
   }, [productUrl]);
 
-  const handleAddToCart = useCallback(() => {
-
-  }, []);
-
   return (
     <Container>
       <Wrapper>
         <Image
           onClick={handleImageClick}
           loading="lazy"
-          src={product?.imageUrl?.lowResolution}
+          src={product?.image}
         />
 
         <ActionButtons>
-          <FavoriteIconButton />
-          <CartIconButton />
+          <FavoriteIconButton productId={product?.id} />
+          {isOnCart ? (
+            <TrashIconButton productId={product?.id} />
+          ) : (
+            <CartIconButton productId={product?.id} />
+          )}
         </ActionButtons>
       </Wrapper>
 

@@ -5,9 +5,14 @@ import { Spacer } from 'presentation/components/Spacer';
 import { styled } from 'presentation/styles/stitches.config';
 import { ToggleButton } from 'presentation/components/ToggleButton';
 import { ProductCard } from 'presentation/components/ProductCard';
-import { localProductList } from 'presentation/layouts/RootLayout';
 
+import { _productListAtom } from 'application/jotai-store/product-list';
+
+import { useAtomValue } from 'jotai';
 import { MagnifyingGlass } from 'phosphor-react';
+import { filterByFavorites } from 'domain/use-cases/filter-by-favorites';
+import { _favoritesAtom } from 'application/jotai-store/favorites';
+import { filterBySearch } from 'domain/use-cases/filter-by-search';
 
 type Props = {}
 
@@ -45,6 +50,8 @@ const Filters = styled('div', {
 });
 
 const ProductGrid = styled('div', {
+  minHeight: 240,
+
   display: 'grid',
   gap: 32,
   gridTemplateColumns: '1fr 1fr 1fr',
@@ -59,12 +66,21 @@ const ProductGrid = styled('div', {
 });
 
 export function HomeProductListComponent(props: Props, ref: ForwardedRef<HTMLDivElement>) {
+  const productListAtom = useAtomValue(_productListAtom);
+  const favoritesAtomm = useAtomValue(_favoritesAtom);
+
   const [search, setSearch] = useState('');
+  const [isFavoritesOnly, setIsFavoritesOnly] = useState(false);
+  const toggleFavoritesOnly = () => setIsFavoritesOnly((state) => !state);
 
   const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.currentTarget.value;
     setSearch(searchValue);
   }, []);
+
+  const currentProductList = isFavoritesOnly
+    ? filterByFavorites(favoritesAtomm, productListAtom)
+    : filterBySearch(productListAtom, search);
 
   return (
     <Container ref={ref}>
@@ -83,7 +99,7 @@ export function HomeProductListComponent(props: Props, ref: ForwardedRef<HTMLDiv
           value={search}
         />
 
-        <ToggleButton rootCss={{ width: 'fit-content' }}>
+        <ToggleButton onToggle={toggleFavoritesOnly} rootCss={{ width: 'fit-content' }}>
           Favoritos
         </ToggleButton>
       </Filters>
@@ -91,7 +107,7 @@ export function HomeProductListComponent(props: Props, ref: ForwardedRef<HTMLDiv
       <Spacer yAxis={80} />
 
       <ProductGrid>
-        {localProductList.map((product) =>
+        {currentProductList.map((product) =>
           <ProductCard
             key={product.id}
             product={product}

@@ -8,12 +8,15 @@ import { ChooseQuantity } from 'presentation/components/ChooseQuantity';
 import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
 import { IconButton } from 'presentation/components/IconButton';
 import { Spacer } from 'presentation/components/Spacer';
-import { localProductList } from 'presentation/layouts/RootLayout';
 import { keyframes, styled } from 'presentation/styles/stitches.config';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
 import { Navigator } from 'presentation/components/Navigator';
 
 import { useParams } from 'react-router-dom';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { _productListAtom } from 'application/jotai-store/product-list';
+import { _cartAtom, _insertCartProductAtom } from 'application/jotai-store/cart';
+import { TrashIconButton } from 'presentation/components/TrashIconButton';
 
 const fadeInAnimation = keyframes({
   from: {
@@ -119,16 +122,27 @@ const ButtonGroup = styled('div', {
 });
 
 export function ProductInformation() {
-  const [isQuantityShown, setIsQuantityShown] = useState(false);
+  const productListAtom = useAtomValue(_productListAtom)
 
   const params = useParams();
-  const product = localProductList.find((product) => product.id === params.productId);
+  const product = productListAtom.find((product) => product.id === params.productId);
+
+  const insertCartProductIntoCart = useSetAtom(_insertCartProductAtom);
+
+  const cartAtom = useAtomValue(_cartAtom);
+  const cartProduct = cartAtom.find((cartProduct) => cartProduct.id === product?.id);
+  const isOnCart = !!cartProduct;
+
+  const [isQuantityShown, setIsQuantityShown] = useState(isOnCart || false);
 
   const formattedPrice = formatPriceToBrl(product?.price || 0);
 
   const handleAddToCart = useCallback(() => {
+    if (!product?.id) return;
+
+    insertCartProductIntoCart({ id: product.id, quantity: 1 });
     setIsQuantityShown(true);
-  }, []);
+  }, [insertCartProductIntoCart, product?.id]);
 
   const handleRemoveFromCart = useCallback(() => {
     setIsQuantityShown(false);
@@ -142,8 +156,11 @@ export function ProductInformation() {
 
       <Wrapper>
         <Banner>
-          <BannerImage src={product?.imageUrl.highResolution} />
-          <FavoriteIconButton rootCss={{ position: 'absolute', bottom: 16, right: 16 }} />
+          <BannerImage src={product?.image} />
+          <FavoriteIconButton
+            productId={product?.id}
+            rootCss={{ position: 'absolute', bottom: 16, right: 16 }}
+          />
         </Banner>
 
         <Information>
@@ -156,17 +173,23 @@ export function ProductInformation() {
 
           <Spacer yAxis={12} />
 
-          <Box as="small" css={{ color: '$MediumGray' }}>Código: {product?.id}</Box>
+          <Box as="small" css={{ color: '$MediumGray' }}>
+            Código: {product?.id}
+          </Box>
 
           <Spacer yAxis={48} />
 
           {isQuantityShown ? (
             <ButtonGroup>
-              <IconButton onClick={handleRemoveFromCart}>
-                <Trash size={24} weight="fill" />
-              </IconButton>
+              <TrashIconButton
+                onRemove={handleRemoveFromCart}
+                productId={product?.id}
+              />
 
-              <ChooseQuantity />
+              <ChooseQuantity
+                initialValue={cartProduct?.quantity}
+                productId={product?.id}
+              />
             </ButtonGroup>
           ) : (
             <Button

@@ -26,10 +26,14 @@ const Container = styled('button', {
   minHeight: 48,
   height: 48,
 
-  fontSize: 16,
+  fontSize: 20,
   fontWeight: '$Medium',
 
   borderRadius: 32,
+
+  '@small-screen': {
+    fontSize: 14,
+  },
 
   '&:focus': {
     boxShadow: '$FocusRing',

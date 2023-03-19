@@ -1,9 +1,12 @@
 import { styled } from 'presentation/styles/stitches.config';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { IconButton } from './IconButton';
 import { Minus, Plus } from 'phosphor-react';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { _cartAtom, _updateCartProductAtom } from 'application/jotai-store/cart';
 
 type Props = {
+  productId?: string;
   initialValue?: number;
 }
 
@@ -25,12 +28,31 @@ const Quantity = styled('span', {
   justifyContent: 'center',
 });
 
-export function ChooseQuantity({ initialValue = 1 }: Props) {
-  const [quantity, setQuantity] = useState(initialValue);
+export function ChooseQuantity({ productId, initialValue }: Props) {
+  const cartAtom = useAtomValue(_cartAtom);
+  const updateCartProductQuantity = useSetAtom(_updateCartProductAtom);
+  const currentQuantity = cartAtom.find((cartProduct) => cartProduct.id === productId)?.quantity;
+
+  const [quantity, setQuantity] = useState(currentQuantity || 1);
   const isDisabled = quantity <= 1;
 
-  const increment = () => setQuantity((quantity) => quantity + 1);
-  const decrement = () => setQuantity((quantity) => quantity - 1);
+  const increment = useCallback(() => {
+    if (!productId) return;
+
+    const newQuantity = quantity + 1;
+
+    updateCartProductQuantity({ id: productId, quantity: newQuantity });
+    setQuantity(newQuantity);
+  }, [productId, quantity]);
+
+  const decrement = useCallback(() => {
+    if (!productId) return;
+
+    const newQuantity = quantity - 1;
+
+    updateCartProductQuantity({ id: productId, quantity: newQuantity });
+    setQuantity(newQuantity);
+  }, [productId, quantity]);
 
   return (
     <Container>

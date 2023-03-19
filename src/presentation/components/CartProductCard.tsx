@@ -1,19 +1,18 @@
 import { useCallback } from 'react';
 
-import { ProductModel } from 'domain/models/product';
+import { Product } from 'domain/models/product';
 
 import { Spacer } from 'presentation/components/Spacer';
-import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
-import { CartIconButton } from 'presentation/components/CartIconButton';
-import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
 import { styled } from 'presentation/styles/stitches.config';
+import { ChooseQuantity } from 'presentation/components/ChooseQuantity';
+import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
+import { TrashIconButton } from 'presentation/components/TrashIconButton';
+import { FavoriteIconButton } from 'presentation/components/FavoriteIconButton';
 
 import { Link, useNavigate } from 'react-router-dom';
-import { TrashIconButton } from './TrashIconButton';
-import { ChooseQuantity } from './ChooseQuantity';
 
 type Props = {
-  product?: Partial<ProductModel>;
+  product?: Product;
 }
 
 const Container = styled('div', {
@@ -99,12 +98,12 @@ export function CartProductCard({ product }: Props) {
         <Image
           onClick={handleImageClick}
           loading="lazy"
-          src={product?.imageUrl?.lowResolution}
+          src={product?.image}
         />
 
         <ActionButtons>
-          <FavoriteIconButton />
-          <TrashIconButton />
+          <FavoriteIconButton productId={product?.id} />
+          <TrashIconButton productId={product?.id} />
         </ActionButtons>
       </Wrapper>
 
@@ -118,7 +117,7 @@ export function CartProductCard({ product }: Props) {
 
       <Spacer yAxis={20} />
 
-      <ChooseQuantity />
+      <ChooseQuantity productId={product?.id} />
     </Container>
   );
 }
