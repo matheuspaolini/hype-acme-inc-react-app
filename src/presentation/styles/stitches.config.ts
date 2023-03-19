@@ -57,7 +57,7 @@ export const useStitches = globalCss({
 
     boxSizing: 'border-box',
 
-    fontFamily: 'Raleway',
+    fontFamily: 'Sarabun',
   },
 
   'body': {
