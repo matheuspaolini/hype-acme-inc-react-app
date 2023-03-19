@@ -7,11 +7,10 @@
 - [Stitches](https://stitches.dev/)
 - [Jotai](https://jotai.org/)
 
-## 💻 Sobre o projeto
+## 💻 About the project
 
-Front-end simulando um e-commerce.
-Contém conta de usuário, o carrinho associado a esta conta e uma tela pedidos feitos pelos usuários.
-Os dados ficam salvos no localStorage.
+Frontend application simulating an e-commerce app.
+All the data is generated and stored on client-side.
 
 ## 📥 Running the project
 
@@ -35,3 +34,35 @@ $ npm run build && npm run preview
 #or
 $ yarn build && yarn preview
 ```
+
+## 🧱 Project Structure
+
+- Domain
+
+  - App entities interfaces, such as product, cart, and checkout.
+  - App business rules, contains all the independent logic implementation.
+
+- Application
+
+  - Contains the Jotai store/atoms that implements the business rules on domain layer.
+  - A factory function to generate the mocked produc list.
+  - Utils folder with encapsulated functions to make easier to create the product list.
+  - Also the 'Acme Inc Http Get Client', a mocked http client to simulate getting the product list from an external API.
+
+- Data
+
+  - Contains hardcoded data.
+
+- Presentation
+
+  - Hooks.
+  - Components.
+  - Feature components (separated sections placed inside each page).
+  - Layouts (essential components to create the App layout).
+  - Pages.
+  - Styles configuration and setup.
+  - Utils, such as price formatter, and open in new tab functions.
+
+- Main
+  - App Router -> [React Router](https://reactrouter.com/en/main)
+  - App file entry point (index.tsx).
