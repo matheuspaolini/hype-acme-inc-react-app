@@ -1,4 +1,4 @@
-export function insertIntoFavorites(favoriteProductList: string[], productId: string) {
+export function insertFavorites(favoriteProductList: string[], productId: string) {
   const updatedProductList = [...favoriteProductList, productId];
   return updatedProductList;
 }
