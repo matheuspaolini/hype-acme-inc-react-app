@@ -1,5 +1,3 @@
-import { CartProduct } from '../models/cart-product';
-
-export function isOnFavorites(cart: CartProduct[], id: string) {
-  return cart.find((cartProduct) => cartProduct.id === id);
+export function isOnFavorites(favorites: string[], id: string) {
+  return favorites.find((favorite) => favorite === id);
 }
