@@ -4,4 +4,4 @@ export type GeneratePriceParams = {
 }
 
 export const generatePrice = ({ titleLength, descriptionLength }: GeneratePriceParams) =>
-  Math.abs(10 + titleLength * ((500 - descriptionLength) / (3 - titleLength)));
+  Math.abs(10 + titleLength * ((500 - descriptionLength) / ((3 - titleLength) || 1)));
