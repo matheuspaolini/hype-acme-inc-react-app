@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { ArrowRight, ShoppingCart, Trash } from 'phosphor-react';
+import { ShoppingCart, Trash } from 'phosphor-react';
 
 import { Box } from 'presentation/components/Box';
 import { Button } from 'presentation/components/Button';
