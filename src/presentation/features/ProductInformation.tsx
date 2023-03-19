@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { ShoppingCart, Trash } from 'phosphor-react';
+import { ArrowRight, ShoppingCart, Trash } from 'phosphor-react';
 
 import { Box } from 'presentation/components/Box';
 import { Button } from 'presentation/components/Button';
@@ -11,6 +11,7 @@ import { Spacer } from 'presentation/components/Spacer';
 import { localProductList } from 'presentation/layouts/RootLayout';
 import { keyframes, styled } from 'presentation/styles/stitches.config';
 import { formatPriceToBrl } from 'presentation/utils/format-price-to-brl';
+import { Navigator } from 'presentation/components/Navigator';
 
 import { useParams } from 'react-router-dom';
 
@@ -31,13 +32,8 @@ const Container = styled('div', {
 
   margin: '0 auto',
 
-  paddingLeft: 24,
-  paddingRight: 24,
-
   '@medium-screen': {
     maxWidth: 640,
-
-    padding: 0,
   }
 });
 
@@ -140,6 +136,8 @@ export function ProductInformation() {
 
   return (
     <Container>
+      <Navigator pageTitle="Produto" />
+
       <Spacer yAxis={64} />
 
       <Wrapper>
