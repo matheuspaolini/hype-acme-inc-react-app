@@ -1,4 +1,4 @@
-import { Main } from 'presentation/components/Main';
+import { Main } from 'presentation/layouts/Main';
 import { ProductInformation } from 'presentation/features/ProductInformation';
 
 export function ProductPage() {
