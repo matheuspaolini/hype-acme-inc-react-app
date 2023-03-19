@@ -9,7 +9,7 @@ import {
 import { CartProductCard } from 'presentation/components/CartProductCard';
 import { Navigator } from 'presentation/components/Navigator';
 import { Spacer } from 'presentation/components/Spacer';
-import { styled } from 'presentation/styles/stitches.config';
+import { animations, styled } from 'presentation/styles/stitches.config';
 
 import { useAtomValue, useSetAtom } from 'jotai';
 import { Button } from 'presentation/components/Button';
@@ -63,7 +63,7 @@ export function UserCart() {
   const clearCartAtom = useSetAtom(_clearCartAtom);
 
   return (
-    <Container>
+    <Container css={{ animation: `${animations.fadeInPopUp} 0.75s ease forwards`, opacity: 0 }}>
       <Navigator pageTitle="Carrinho" />
 
       <Spacer yAxis={64} />

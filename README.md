@@ -12,6 +12,8 @@
 Frontend application simulating an e-commerce app.
 All the data is generated and stored on client-side.
 
+Images provided by [Lorem Picsum](https://picsum.photos/);
+
 ## 📥 Running the project
 
 ```bash
