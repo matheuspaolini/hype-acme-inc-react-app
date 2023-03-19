@@ -53,11 +53,11 @@ const Path = styled('div', {
 export function Navigator({ pageTitle, rootCss }: Props) {
   const navigate = useNavigate();
 
-  const goHome = () => navigate({ pathname: '/' }, { preventScrollReset: true });
+  const goBack = () => navigate(-1);
 
   return (
     <Container css={{ ...rootCss }}>
-      <BackButton onClick={goHome}>
+      <BackButton onClick={goBack}>
         <CaretLeft size={24} />
         <span>Voltar</span>
       </BackButton>
