@@ -2,6 +2,7 @@ import { useCallback, useRef } from 'react';
 
 import { HomeWelcome } from 'presentation/features/HomeWelcome';
 import { HomeProductList } from 'presentation/features/HomeProductList';
+import { Main } from 'presentation/components/Main';
 
 export function HomePage() {
   const productListRef = useRef(null as HTMLDivElement | null);
@@ -15,9 +16,9 @@ export function HomePage() {
   }, []);
 
   return (
-    <main>
+    <Main>
       <HomeWelcome productListScrollTrigger={handleScrollToProductList} />
       <HomeProductList ref={productListRef} />
-    </main>
+    </Main>
   );
 }
