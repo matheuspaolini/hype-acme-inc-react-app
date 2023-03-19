@@ -1,5 +1,6 @@
 import { insertFavorites } from 'domain/use-cases/insert-favorite';
 import { removeFavorite } from 'domain/use-cases/remove-favorite';
+
 import { atom } from 'jotai';
 
 export const _favoritesAtom = atom([] as string[]);
