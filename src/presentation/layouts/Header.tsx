@@ -101,15 +101,11 @@ export function Header() {
             </li>
 
             <li>
-              <Link to="/">
-                <Anchor>Blog</Anchor>
-              </Link>
+              <Anchor>Blog</Anchor>
             </li>
 
             <li>
-              <Link to="/">
-                <Anchor>Sobre</Anchor>
-              </Link>
+              <Anchor>Sobre</Anchor>
             </li>
           </AnchorList>
         )}
