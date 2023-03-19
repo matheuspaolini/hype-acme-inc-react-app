@@ -9,12 +9,9 @@ const Container = styled('div', {
   maxWidth: 1080,
 
   margin: '0 auto',
-  padding: '24px 0',
 
   '@medium-screen': {
     maxWidth: 640,
-
-    padding: 0,
   }
 });
 
