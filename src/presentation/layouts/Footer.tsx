@@ -66,7 +66,7 @@ const RepositoryAnchor = styled('a', {
 export function Footer() {
   const showBottomScreenPricePreviewAtom = useAtomValue(_showBottomScreenPricePreviewAtom);
 
-  const goToLiveDemo = () => openInNewTab('about:blank');
+  const goToLiveDemo = () => openInNewTab(import.meta.env.VITE_LIVE_DEMO);
 
   return (
     <Container
