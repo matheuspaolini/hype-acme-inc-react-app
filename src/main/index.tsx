@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
+import { browserRouter } from 'main/routes/Router';
+
+import { Provider as JotaiProvider } from 'jotai';
 import { RouterProvider } from 'react-router-dom';
-import { browserRouter } from './routes/Router';
 
 const rootElement = document.getElementById('root') as HTMLElement;
 
@@ -10,6 +12,8 @@ ReactDOM
   .createRoot(rootElement)
   .render(
     <React.StrictMode>
-      <RouterProvider router={browserRouter} />
+      <JotaiProvider>
+        <RouterProvider router={browserRouter} />
+      </JotaiProvider>
     </React.StrictMode>,
   );
