@@ -9,18 +9,13 @@ import { localProductList } from 'presentation/layouts/RootLayout';
 
 import { MagnifyingGlass } from 'phosphor-react';
 
-type Props = {
-
-}
+type Props = {}
 
 const Container = styled('div', {
   width: '100%',
   maxWidth: 1080,
 
   margin: '0 auto',
-
-  paddingLeft: 24,
-  paddingRight: 24,
 });
 
 const Title = styled('h2', {
