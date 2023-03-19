@@ -63,7 +63,7 @@ export function UserCart() {
   const clearCartAtom = useSetAtom(_clearCartAtom);
 
   return (
-    <Container css={{ animation: `${animations.fadeInPopUp} 0.75s ease forwards`, opacity: 0 }}>
+    <Container css={{ animation: `${animations.slideAndfadeIn} 0.75s ease forwards`, opacity: 0 }}>
       <Navigator pageTitle="Carrinho" />
 
       <Spacer yAxis={64} />

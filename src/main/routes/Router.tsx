@@ -6,6 +6,7 @@ import { FinishedPage } from 'presentation/pages/Finished';
 import { ProductPage } from 'presentation/pages/Product';
 
 import { createBrowserRouter } from 'react-router-dom';
+import { NotFoundPage } from 'presentation/pages/NotFound';
 
 export const browserRouter = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const browserRouter = createBrowserRouter([
       {
         path: 'finished',
         element: <FinishedPage />
+      },
+      {
+        path: '*',
+        element: <NotFoundPage />
       }
     ]
   }
